@@ -1,0 +1,14 @@
+<glossary><term>
+        <word>MaaS</word>
+        <extended>MongoDB as an Admin Service</extended>
+        <definition>Progetto</definition>
+    </term><term>
+        <word>Prova</word>
+        <definition>Definizione di prova</definition>
+    </term><term>
+        <word>Multiple</word>
+        <extended>Parola con definizioni multiple</extended>
+        <definition>Definizione 1</definition>
+        <definition>Definizione 2</definition>
+        <definition>Definizione 3</definition>
+    </term></glossary>
