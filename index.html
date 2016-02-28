@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Welcome to XML-Glossary plugin!</h1>
+    <p>By clicking "Add glossary" you upload the glossary file and get, in the same directory, the file main.tex.  This file contains the LaTeX code for the glossary.</p>
+    <p>The "Integrate" button, instead, reads the main.tex file just created and another .tex file and, for each word in the glossary, replace all occurrences of that word with \glossaryItem{word}.</p>
+    <form>
+        <fieldset>
+            <legend for="glossary">Glossary file: </legend>
+            <input type="file" name="glossary" id="glossary" />
+            <button onclick="">Add glossary</button>
+        </fieldset>
+        <fieldset>
+            <legend for="document">Document file: </legend>
+            <input type="file" name="document" id="document" />
+            <button onclick="">Integrate</button>
+        </fieldset>
+    </form>
+</body>
+</html>
