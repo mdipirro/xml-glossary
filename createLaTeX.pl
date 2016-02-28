@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 use strict;
 
 use XML::LibXML;
@@ -8,7 +9,7 @@ my $xslFile = 'alphabeticalOrder.xsl';
 my $orderedFile = 'orderedGlossary.xml';
 my $xslt = XML::XSLT->new ($xslFile, warnings => 1);
 $xslt->transform ($xmlFile);
-open(my $orderedGlossary, '>', $orderedFile);
+open(my $orderedGlossary, ">$orderedFile");
 print $orderedGlossary '<?xml version="1.0" encoding="UTF-8"?>';
 print $orderedGlossary $xslt->toString;
 close $orderedGlossary;
@@ -27,9 +28,13 @@ foreach my $letter (@letters) { # foreach letter
         print $tex '\begin{description}';
         foreach my $term ($xmldoc->findnodes("//term[substring(word,1,1) = '$letter']")) {
             print $tex '\item[' . $term->findvalue('./word') . '] \hfill \\\\' . "\n";
-            if ($term->exists('./extended')) {
-                print $tex 'Nome esteso: ' . $term->findvalue('./extended') . "\n";
+            if ($term->exists('./extended')) { # check if there's an extended explanation of the word
+                print $tex 'Nome esteso: ' . $term->findvalue('./extended') . "\n \\\\";
             }
+            if ($term->exists('./plural')) { # check if there's a plural of the word
+                print $tex 'Plurale: ' . $term->findvalue('./plural') . "\n \\\\";
+            }
+            # print all the definitions of the word
             print $tex '\begin{enumerate}' . "\n";
             foreach my $definition ($term->findnodes('./definition')) {
                 print $tex '\item ' . $definition->textContent() . "\n";
