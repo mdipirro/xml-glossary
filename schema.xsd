@@ -9,6 +9,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="word" type="xs:ID" />
+                            <xs:element name="plural" type="xs:string" minOccurs="0" />
                             <xs:element name="extended" type="xs:string" minOccurs="0" />
                             <xs:element name="definition" type="xs:string" maxOccurs="unbounded" />
                         </xs:sequence>

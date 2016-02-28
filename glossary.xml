@@ -9,10 +9,12 @@
     </term>
     <term>
         <word>Prova</word>
+        <plural>Prove</plural>
         <definition>Definizione di prova</definition>
     </term>
     <term>
-        <word>Multiple</word>
+        <word>Multipla</word>
+        <plural>Multiple</plural>
         <extended>Parola con definizioni multiple</extended>
         <definition>Definizione 1</definition>
         <definition>Definizione 2</definition>
