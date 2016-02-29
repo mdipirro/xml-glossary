@@ -2,14 +2,14 @@
 use strict;
 use warnings FATAL => 'all';
 
-# read the content of the glossary and of the document
-open(my $glossaryFile, '<main.tex');
+# read the content of the glossaryLaTeX and of the document
+open(my $glossaryFile, '<' . $ARGV[0]);
 my $glossary = join('', <$glossaryFile>);
 close $glossaryFile;
-open(my $documentFile, '<test.tex');
+open(my $documentFile, '<' . $ARGV[1]);
 my $document = join('', <$documentFile>);
 close $documentFile;
-# find the word in the glossary and store them in an array
+# find the word in the glossaryLaTeX and store them in an array
 my @words = $glossary =~ /(\\item\[\w+\])/g;
 for (my $i = 0; $i < @words; $i++) {
     $words[$i] = substr($words[$i], 6, -1);
@@ -33,6 +33,6 @@ foreach my $word (@words) {
     $document =~ s/\\glossaryItem{\\glossaryItem{$lowercaseWord}}/\\glossaryItem{$lowercaseWord}/g;
 }
 # write on the document file
-open ($documentFile, '>test.tex');
+open ($documentFile, '>' . $ARGV[1]);
 print $documentFile $document;
 close $documentFile;
