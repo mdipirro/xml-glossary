@@ -1,24 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Welcome to XML-Glossary plugin!</h1>
-    <p>By clicking "Add glossary" you upload the glossary file and get, in the same directory, the file main.tex.  This file contains the LaTeX code for the glossary.</p>
-    <p>The "Integrate" button, instead, reads the main.tex file just created and another .tex file and, for each word in the glossary, replace all occurrences of that word with \glossaryItem{word}.</p>
-    <form>
-        <fieldset>
-            <legend for="glossary">Glossary file: </legend>
-            <input type="file" name="glossary" id="glossary" />
-            <button onclick="">Add glossary</button>
-        </fieldset>
-        <fieldset>
-            <legend for="document">Document file: </legend>
-            <input type="file" name="document" id="document" />
-            <button onclick="">Integrate</button>
-        </fieldset>
-    </form>
-</body>
-</html>
+<h1>Welcome to XML-Glossary plugin!</h1>
+<p>By clicking "Create glossary" you upload the glossary file and get, in the same directory, the file main.tex.  This file contains the LaTeX code for the glossary.</p>
+<p>The "Integrate" button, instead, reads two .tex files. The first represents the LaTeX code of the glossary; the second represents the target document. For each word in the glossary, replace all occurrences of that word with \glossaryItem{word}.</p>
+<form>
+    <fieldset>
+        <legend>Create</legend>
+        <label for="xmlglossary">Glossary file: </label>
+        <input type="text" name="xmlglossary" id="xmlglossary" />
+        <button id="create" onclick="
+            var socketPlugin = require('./socket_plugin');
+            socketPlugin.run('git@github.com:mdipirro/xml-glossary.git::glossaryLaTeX', [
+                document.getElementById('xmlglossary').value
+            ],
+             function () {});
+            return false; // otherwise there's a submit.
+        ">Create glossary</button>
+    </fieldset>
+    <fieldset>
+        <legend>Integrate</legend>
+        <label for="texglossary">Glossary file: </label>
+        <input type="text" name="texglossary" id="texglossary" />
+        <label for="target">Document file: </label>
+        <input type="text" name="target" id="target" />
+        <button id="integrate" onclick="
+            var socketPlugin = require('./socket_plugin');
+            console.log(document.getElementById('target').value);
+            socketPlugin.run('git@github.com:mdipirro/xml-glossary.git::glossaryItem', [
+                document.getElementById('texglossary').value,
+                document.getElementById('target').value
+            ],
+            function () {});
+            return false; // otherwise there's a submit.
+        ">Integrate</button>
+    </fieldset>
+</form>
