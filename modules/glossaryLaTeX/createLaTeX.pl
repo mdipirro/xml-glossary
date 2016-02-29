@@ -7,7 +7,7 @@ use XML::XSLT;
 use Cwd;
 
 my $xmlFile = $ARGV[0];
-my $xslFile = './plugins/mdipirro/xml-glossary/modules/glossary/alphabeticalOrder.xsl';
+my $xslFile = './plugins/mdipirro/xml-glossary/modules/glossaryLaTeX/alphabeticalOrder.xsl';
 my $orderedFile = $xmlFile;
 $orderedFile =~ s/.xml/Ordered.xml/;
 my $xslt = XML::XSLT->new ($xslFile, warnings => 1);
