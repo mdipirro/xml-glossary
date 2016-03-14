@@ -2,8 +2,6 @@
 use strict;
 use warnings FATAL => 'all';
 
-print $ARGV[0] . "\n" . $ARGV[1];
-
 # read the content of the glossaryLaTeX and of the document
 open(my $glossaryFile, '<' . $ARGV[0]);
 my $glossary = join('', <$glossaryFile>);

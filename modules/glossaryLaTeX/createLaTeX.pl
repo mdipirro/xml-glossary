@@ -7,7 +7,8 @@ use XML::XSLT;
 use Cwd;
 
 my $xmlFile = $ARGV[0];
-my $xslFile = './plugins/mdipirro/xml-glossary/modules/glossaryLaTeX/alphabeticalOrder.xsl';
+#my $xslFile = './plugins/mdipirro/xml-glossary/modules/glossaryLaTeX/alphabeticalOrder.xsl';
+my $xslFile = 'alphabeticalOrder.xsl';
 my $orderedFile = $xmlFile;
 $orderedFile =~ s/.xml/Ordered.xml/;
 my $xslt = XML::XSLT->new ($xslFile, warnings => 1);
@@ -22,7 +23,7 @@ my @letters = (
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
 );
-my $texFilename = substr($ARGV[0], 0, rindex($ARGV[0], '/')) . '/main.tex';
+my $texFilename = substr($ARGV[0], 0, rindex($ARGV[0], '/')) . '/glossary.tex';
 open(my $tex, '>:crlf', $texFilename);
 foreach my $letter (@letters) { # foreach letter
     if ($xmldoc->exists("//term[substring(word,1,1) = '$letter']")) { # if there's a word which starts with it
