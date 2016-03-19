@@ -10,7 +10,7 @@ open(my $documentFile, '<' . $ARGV[1]);
 my $document = join('', <$documentFile>);
 close $documentFile;
 # find the word in the glossaryLaTeX and store them in an array
-my @words = $glossary =~ /(\\item\[\w+\])/g;
+my @words = $glossary =~ /(\\item\[[\w+(\s|\/|\-)]+\])/g;
 for (my $i = 0; $i < @words; $i++) {
     $words[$i] = substr($words[$i], 6, -1);
 }
@@ -22,15 +22,21 @@ push (@words, @plurals);
 # given a word "word", replace all the occurrences of "word" with \glossaryItem{word}
 my $lowercaseWord;
 foreach my $word (@words) {
+	print $word;
     # replace the word adding \glossaryItem
     # the word may be written with the first character in lower or upper case. Replace both
     $lowercaseWord = lcfirst($word);
-    $document =~ s/$word/\\glossaryItem{$word}/g;
-    $document =~ s/$lowercaseWord/\\glossaryItem{$lowercaseWord}/g;
+    $document =~ s/$word([^\w])/\\glossaryItem{$word}$1/g;
+    $document =~ s/$lowercaseWord([^\w])/\\glossaryItem{$lowercaseWord}$1/g;
 
     # if there's already glossaryItem, delete the one just added
     $document =~ s/\\glossaryItem{\\glossaryItem{$word}}/\\glossaryItem{$word}/g;
     $document =~ s/\\glossaryItem{\\glossaryItem{$lowercaseWord}}/\\glossaryItem{$lowercaseWord}/g;
+
+    $document =~ s/section{\\glossaryItem{$lowercaseWord}}/section{$lowercaseWord}/g;
+    $document =~ s/section{\\glossaryItem{$word}}/section{$word}/g;
+    $document =~ s/section{\\glossaryItem{\\glossaryItem{$word}}}/section{$word}/g;
+    $document =~ s/section{\\glossaryItem{\\glossaryItem{$lowercaseWord}}}/section{$lowercaseWord}/g;
 }
 # write on the document file
 open ($documentFile, '>' . $ARGV[1]);
