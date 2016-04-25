@@ -35,8 +35,8 @@ foreach my $file (@files) {
 		# replace the word adding \glossaryItem
 		# the word may be written with the first character in lower or upper case. Replace both
 		$lowercaseWord = lcfirst($word);
-		$document =~ s/ $word[ ]?([^\w])/ \\glossaryItem{$word}$1/g;
-		$document =~ s/ $lowercaseWord[ ]?([^\w])/ \\glossaryItem{$lowercaseWord}$1/g;
+		$document =~ s/ $word([ ]?[^\w])/ \\glossaryItem{$word}$1/g;
+		$document =~ s/ $lowercaseWord([ ]?[^\w])/ \\glossaryItem{$lowercaseWord}$1/g;
 
 		# if there's already glossaryItem, delete the one just added
 		$document =~ s/\\glossaryItem{\\glossaryItem{$word}}/\\glossaryItem{$word}/g;
