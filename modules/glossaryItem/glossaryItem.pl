@@ -43,10 +43,10 @@ foreach my $file (@files) {
 		$document =~ s/\\glossaryItem{\\glossaryItem{$lowercaseWord}}/\\glossaryItem{$lowercaseWord}/g;
 
 		# remove glossaryItem from sections
-		$document =~ s/section{([\w ]*)\\glossaryItem{$lowercaseWord}/section{$1$lowercaseWord/g;
-		$document =~ s/section{([\w ]*)\\glossaryItem{$word}/section{$1$word/g;
-		$document =~ s/section{([\w ]*)\\glossaryItem{\\glossaryItem{$word}}/section{$word/g;
-		$document =~ s/section{([\w ]*)\\glossaryItem{\\glossaryItem{$lowercaseWord}}/section{$1$lowercaseWord/g;
+		$document =~ s/section{([\w }]*)\\glossaryItem{$lowercaseWord}/section{$1$lowercaseWord/g;
+		$document =~ s/section{([\w }]*)\\glossaryItem{$word}/section{$1$word/g;
+		$document =~ s/section{([\w }]*)\\glossaryItem{\\glossaryItem{$word}}/section{$word/g;
+		$document =~ s/section{([\w }]*)\\glossaryItem{\\glossaryItem{$lowercaseWord}}/section{$1$lowercaseWord/g;
 
 		# add glossaryItem on Node.js
 		$document =~ s/Node.js/\\glossaryItem{Node.js}/g;
