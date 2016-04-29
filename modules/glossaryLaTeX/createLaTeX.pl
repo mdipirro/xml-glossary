@@ -11,7 +11,7 @@ my $xmlFile = $ARGV[0];
 #my $xslFile = './plugins/mdipirro/xml-glossary/modules/glossaryLaTeX/alphabeticalOrder.xsl';
 my $xslFile = 'alphabeticalOrder.xsl';
 my $orderedFile = $xmlFile;
-$orderedFile =~ s/.xml/Ordered.xml/;
+$orderedFile =~ s/.xml$/Ordered.xml/;
 my $xslt = XML::LibXSLT->new();
 my $source = XML::LibXML->load_xml(location => $xmlFile);
 my $style_doc = XML::LibXML->load_xml(location=>$xslFile, no_cdata=>1);
@@ -19,9 +19,20 @@ my $stylesheet = $xslt->parse_stylesheet($style_doc);
 my $results = $stylesheet->transform($source);
 my $out = $stylesheet->output_as_bytes($results);
 $out =~ s/<\?xml version="1.0"\?>/<\?xml version="1.0" encoding="UTF-8"\?>/;
+# escape chars #, _ and % 
+my @escape = ('%', '#', '_');
+foreach my $e (@escape) {
+    $out =~ s/$e/\\$e/g;
+    $out =~ s/\\\\$e/\\$e/g;
+}
+# escape $
+$out =~ s/\$/\\\$/g;
+$out =~ s/\\\\\$/\\\$/g;
+# write on the ordered glossary
 open my $orderedGlossary, '>', "$orderedFile";
 print $orderedGlossary $out;
 close $orderedGlossary;
+# start glossary parsing
 open $orderedGlossary, '<', "$orderedFile";
 my $parser = XML::LibXML->new();
 my $xmldoc = $parser->parse_file($orderedFile);
